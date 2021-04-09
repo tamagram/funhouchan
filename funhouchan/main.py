@@ -11,36 +11,25 @@ def main():
         print("terminal> export DISCORD_FUNHOUCHAN=???")
         exit()
 
-    client = discord.Client()
+    bot = commands.Bot(command_prefix='?')
 
-    # Works on startup
-    @client.event
+    @bot.event
     async def on_ready():
-        print("ログインしたよ!")
+        print("funhouchan Activated!")
 
-    # When a message is received
-    @client.event
-    async def on_message(message):
-        # If the sender is a bot
-        if message.author.bot:
-            return
-        
-        if message.content == '/funhouchan':
-            await message.channel.send("はろー！")
-            return
-
-        if message.content == '/setfunhou':
-            await message.channel.send("分報のチャンネルIDを教えて!")
-            return
-        
-    bot = commands.Bot(command_prefix='$')
 
     @bot.command()
     async def test(ctx, arg):
         await ctx.send(arg)
 
-    # Startup and connection
-    client.run(TOKEN)
+    @bot.command()
+    async def funhou_set(ctx, user_name, sender_channel_id, dest_channel_id):
+        sender_channel = bot.get_channel(int(sender_channel_id))
+        dest_channel = bot.get_channel(int(dest_channel_id))
+        await sender_channel.send("分報告の送り元はここに設定されたよ!")
+        await dest_channel.send("分報の送り先はここに設定されたよ!")
+
+    bot.run(TOKEN)
 
     
 if __name__ == "__main__":
