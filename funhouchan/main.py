@@ -2,6 +2,8 @@ import os
 import discord
 from discord.ext import commands
 
+from feature import funhou
+
 def main():
     # Checking token
     TOKEN = os.environ.get("DISCORD_FUNHOUCHAN", None)
@@ -22,12 +24,12 @@ def main():
     async def test(ctx, arg):
         await ctx.send(arg)
 
+    feature_funhou = funhou.Funhou(bot)
     @bot.command()
     async def funhou_set(ctx, user_name, sender_channel_id, dest_channel_id):
-        sender_channel = bot.get_channel(int(sender_channel_id))
-        dest_channel = bot.get_channel(int(dest_channel_id))
-        await sender_channel.send("分報告の送り元はここに設定されたよ!")
-        await dest_channel.send("分報の送り先はここに設定されたよ!")
+        feature_funhou.sender_channel_id = sender_channel_id
+        feature_funhou.dest_channel_id = dest_channel_id
+        await feature_funhou.set_channel()
 
     bot.run(TOKEN)
 
