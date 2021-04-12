@@ -18,5 +18,6 @@ class Funhou(object):
 
     async def send_funhou(self, author, message_content):
         dest_channel = self.bot.get_channel(self._dest_channel_id)
-        await dest_channel.send(author.avatar_url)
-        await dest_channel.send(message_content)
+        embed = discord.Embed(description=message_content)
+        embed.set_author(name=author.name, icon_url=author.avatar_url)
+        await dest_channel.send(embed=embed)

@@ -3,12 +3,14 @@ from discord.ext import commands
 
 from feature.funhou import Funhou
 
+# Controller for funhouchan
 class Controller(object):
     def __init__(self, TOKEN):
         self.bot = commands.Bot(command_prefix='?')
         self.TOKEN = TOKEN
         self.funhou = None
 
+    # activate
     def run(self):
         @self.bot.event
         async def on_ready():
@@ -23,7 +25,8 @@ class Controller(object):
                     author = message.author
                     await self.funhou.send_funhou(author, message_content=message.content)
             await self.bot.process_commands(message)
-
+        
+        # temporary
         @self.bot.command()
         async def avatar(ctx, *,  avamember : discord.Member=None):
             userAvatarUrl = avamember.avatar_url
