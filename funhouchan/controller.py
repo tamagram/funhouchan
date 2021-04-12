@@ -16,6 +16,8 @@ class Controller(object):
         
         @self.bot.event
         async def on_message(message):
+            if message.author.bot:
+                return
             if hasattr(self.funhou, "current_channel_id"):
                 if message.channel.id == self.funhou.current_channel_id()[0]:
                     await self.funhou.send_funhou(message.content)
