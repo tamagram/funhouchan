@@ -20,8 +20,14 @@ class Controller(object):
                 return
             if hasattr(self.funhou, "current_channel_id"):
                 if message.channel.id == self.funhou.current_channel_id()[0]:
-                    await self.funhou.send_funhou(message.content)
+                    author = message.author
+                    await self.funhou.send_funhou(author, message_content=message.content)
             await self.bot.process_commands(message)
+
+        @self.bot.command()
+        async def avatar(ctx, *,  avamember : discord.Member=None):
+            userAvatarUrl = avamember.avatar_url
+            await ctx.send(userAvatarUrl)
 
         @self.bot.command()
         async def funhou_set(ctx, user_name, sender_channel_id, dest_channel_id):

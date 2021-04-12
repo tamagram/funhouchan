@@ -1,3 +1,5 @@
+import discord
+
 class Funhou(object):
     
     def __init__(self, bot, user_name, channel_id):
@@ -14,6 +16,7 @@ class Funhou(object):
         await sender_channel.send("分報告の送り元はここに設定されたよ!")
         await dest_channel.send("分報の送り先はここに設定されたよ!")
 
-    async def send_funhou(self, message_content):
+    async def send_funhou(self, author, message_content):
         dest_channel = self.bot.get_channel(self._dest_channel_id)
+        await dest_channel.send(author.avatar_url)
         await dest_channel.send(message_content)
